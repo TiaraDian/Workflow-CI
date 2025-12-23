@@ -1,0 +1,37 @@
+artifact_path: file:///D:/SMSML_Tiara Diansyah Putri/Workflow-CI/mlruns/0/models/m-b4d746403c7e4f2aac9041e2a373ffe1/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.1
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+is_signature_from_type_hint: false
+mlflow_version: 3.8.0
+model_id: m-b4d746403c7e4f2aac9041e2a373ffe1
+model_size_bytes: 1068
+model_uuid: m-b4d746403c7e4f2aac9041e2a373ffe1
+prompts: null
+run_id: db4bfeb5d97d409dbc00ec2254eff891
+signature:
+  inputs: '[{"type": "double", "name": "Age", "required": true}, {"type": "long",
+    "name": "Sex", "required": true}, {"type": "long", "name": "Chest pain type",
+    "required": true}, {"type": "double", "name": "BP", "required": true}, {"type":
+    "double", "name": "Cholesterol", "required": true}, {"type": "long", "name": "FBS
+    over 120", "required": true}, {"type": "long", "name": "EKG results", "required":
+    true}, {"type": "double", "name": "Max HR", "required": true}, {"type": "long",
+    "name": "Exercise angina", "required": true}, {"type": "double", "name": "ST depression",
+    "required": true}, {"type": "long", "name": "Slope of ST", "required": true},
+    {"type": "long", "name": "Number of vessels fluro", "required": true}, {"type":
+    "long", "name": "Thallium", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-12-23 16:44:16.237622'
