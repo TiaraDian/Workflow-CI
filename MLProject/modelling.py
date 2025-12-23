@@ -4,9 +4,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import mlflow
 import mlflow.sklearn
+import os
 
-# Load dataset preprocessing
-DATA_PATH = r"D:\SMSML_Tiara Diansyah Putri\Workflow-CI\MLProject\Heart_Disease_Prediction_preprocessing.csv"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_PATH = os.path.join(BASE_DIR, "Heart_Disease_Prediction_preprocessing.csv")
+
 df = pd.read_csv(DATA_PATH)
 
 # Pisahkan fitur & target
