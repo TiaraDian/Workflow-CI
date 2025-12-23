@@ -6,7 +6,7 @@ import mlflow
 import mlflow.sklearn
 
 # Load dataset preprocessing
-DATA_PATH = r"D:\SMSML_Tiara Diansyah Putri\Workflow-CI\MLProject\Heart_Disease_Prediction_preprocessing.csv"
+DATA_PATH = "Heart_Disease_Prediction_preprocessing.csv"
 df = pd.read_csv(DATA_PATH)
 
 # Pisahkan fitur & target
