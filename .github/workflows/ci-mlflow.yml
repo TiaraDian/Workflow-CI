@@ -1,38 +1,46 @@
-name: MLflow CI Training
+name: MLflow CI Training + Docker
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  train-model:
+  train-and-docker:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          auto-activate-base: false
-          environment-file: MLProject/conda.yaml
-          activate-environment: mlflow-env
+    - name: Set up Miniconda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        activate-environment: mlflow-env
+        environment-file: MLProject/conda.yaml
+        auto-activate-base: false
 
-      - name: Install MLflow
-        shell: bash -l {0}
-        run: |
-          pip install mlflow
+    - name: Install MLflow
+      run: |
+        pip install mlflow
 
-      - name: Run MLflow Project
-        shell: bash -l {0}
-        run: |
-          cd MLProject
-          mlflow run .
+    - name: Run MLflow Project (Training)
+      run: |
+        mlflow run MLProject
 
-      - name: Upload MLflow Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: mlflow-artifacts
-          path: MLProject/mlruns
+    # ================= DOCKER PART =================
+
+    - name: Login to Docker Hub
+      run: |
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
+        -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Build Docker Image with MLflow
+      run: |
+        mlflow models build-docker \
+          --model-uri runs:/0/model \
+          --name tiaradian/mlflow-heart-disease
+
+    - name: Push Docker Image to Docker Hub
+      run: |
+        docker push tiaradian/mlflow-heart-disease
