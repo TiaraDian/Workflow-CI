@@ -22,8 +22,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # Aktifkan MLflow autolog
 mlflow.sklearn.autolog()
-
-with mlflow.start_run():
     model = LogisticRegression(max_iter=1000)
     model.fit(X_train, y_train)
 
