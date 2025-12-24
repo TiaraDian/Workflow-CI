@@ -14,10 +14,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up Python 3.12
+    - name: Set up Python 3.10
       uses: actions/setup-python@v4
       with:
-        python-version: "3.12"
+        python-version: "3.10"
 
     - name: Check Env
       run: |
@@ -28,6 +28,12 @@ jobs:
       run: |
         pip install mlflow pandas numpy scikit-learn scipy
 
+    - name: Reset MLflow Env
+      run: |
+        unset MLFLOW_RUN_ID
+        unset MLFLOW_EXPERIMENT_ID
+        rm -rf mlruns
+
     - name: Run MLflow Project
       run: |
         mlflow run MLProject --env-manager=local
@@ -35,7 +41,7 @@ jobs:
     - name: Get latest MLflow run_id
       id: get_run
       run: |
-        RUN_ID=$(ls mlruns/0 | grep -v meta.yaml | head -n 1)
+        RUN_ID=$(ls -td mlruns/*/* | head -n 1 | xargs basename)
         echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
         echo "Latest run_id: $RUN_ID"
 
