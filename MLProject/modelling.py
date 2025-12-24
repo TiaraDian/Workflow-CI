@@ -1,33 +1,39 @@
+import os
 import pandas as pd
+import mlflow
+import mlflow.sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-import mlflow
-import mlflow.sklearn
-import os
-os.environ["MPLBACKEND"] = "Agg"
+
+# =========================
+# MLflow HARD RESET
+# =========================
+os.environ.pop("MLFLOW_RUN_ID", None)
+os.environ.pop("MLFLOW_EXPERIMENT_ID", None)
+mlflow.end_run()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(BASE_DIR, "Heart_Disease_Prediction_preprocessing.csv")
+mlflow.set_tracking_uri(f"sqlite:///{os.path.join(BASE_DIR, 'mlflow.db')}")
+mlflow.set_experiment("heart-disease-ci")
 
-df = pd.read_csv(DATA_PATH)
-
-X = df.drop(columns=["Heart Disease"])
+# =========================
+# DATA
+# =========================
+df = pd.read_csv(os.path.join(BASE_DIR, "Heart_Disease_Prediction_preprocessing.csv"))
+X = df.drop(columns=["Heart Disease"]).astype("float64")
 y = df["Heart Disease"]
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-TRACKING_URI = f"sqlite:///{os.path.join(BASE_DIR, 'mlflow.db')}"
-mlflow.set_tracking_uri(TRACKING_URI)
-
-mlflow.set_experiment("heart-disease-ci")
-
 mlflow.sklearn.autolog()
 
-with mlflow.start_run(run_name="logreg-heart-disease"):
-
+with mlflow.start_run(
+    run_name="logreg-heart-disease",
+    clear_active_run=True
+):
     model = LogisticRegression(max_iter=1000)
     model.fit(X_train, y_train)
 
