@@ -39,9 +39,9 @@ jobs:
         mlflow run MLProject --env-manager=local
 
     - name: Get latest MLflow run_id
-      id: get_run
       run: |
-        RUN_ID=$(ls -td mlruns/*/* | head -n 1 | xargs basename)
+        RUN_ID=$(sqlite3 MLProject/mlflow.db \
+          "select run_uuid from runs order by start_time desc limit 1;")
         echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
         echo "Latest run_id: $RUN_ID"
 

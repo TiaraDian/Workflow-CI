@@ -1,1 +1,0 @@
-kriteria 3

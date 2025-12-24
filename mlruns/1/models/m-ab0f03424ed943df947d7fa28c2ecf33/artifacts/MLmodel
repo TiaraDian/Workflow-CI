@@ -1,4 +1,4 @@
-artifact_path: file:///D:/SMSML_Tiara Diansyah Putri/Workflow-CI/mlruns/0/models/m-b17544c53c33475e9b2d748bed9d75ec/artifacts
+artifact_path: file:///D:/SMSML_Tiara Diansyah Putri/Workflow-CI/mlruns/1/models/m-ab0f03424ed943df947d7fa28c2ecf33/artifacts
 flavors:
   python_function:
     env:
@@ -15,11 +15,11 @@ flavors:
     sklearn_version: 1.8.0
 is_signature_from_type_hint: false
 mlflow_version: 3.8.0
-model_id: m-b17544c53c33475e9b2d748bed9d75ec
+model_id: m-ab0f03424ed943df947d7fa28c2ecf33
 model_size_bytes: 1068
-model_uuid: m-b17544c53c33475e9b2d748bed9d75ec
+model_uuid: m-ab0f03424ed943df947d7fa28c2ecf33
 prompts: null
-run_id: bb1034747499435d90e629da89dc7b8e
+run_id: e3f8c85401ef463dab558b4c78621f82
 signature:
   inputs: '[{"type": "double", "name": "Age", "required": true}, {"type": "long",
     "name": "Sex", "required": true}, {"type": "long", "name": "Chest pain type",
@@ -34,4 +34,4 @@ signature:
   outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
   params: null
 type_hint_from_example: false
-utc_time_created: '2025-12-23 17:05:15.292149'
+utc_time_created: '2025-12-24 00:42:16.599903'

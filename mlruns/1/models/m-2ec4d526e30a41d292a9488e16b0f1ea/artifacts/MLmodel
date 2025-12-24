@@ -1,4 +1,4 @@
-artifact_path: file:///D:/SMSML_Tiara Diansyah Putri/Workflow-CI/mlruns/0/models/m-bcc261dbf9034f07a40f760854560efb/artifacts
+artifact_path: file:///D:/SMSML_Tiara Diansyah Putri/Workflow-CI/mlruns/1/models/m-2ec4d526e30a41d292a9488e16b0f1ea/artifacts
 flavors:
   python_function:
     env:
@@ -14,9 +14,9 @@ flavors:
     serialization_format: cloudpickle
     sklearn_version: 1.8.0
 mlflow_version: 3.8.0
-model_id: m-bcc261dbf9034f07a40f760854560efb
+model_id: m-2ec4d526e30a41d292a9488e16b0f1ea
 model_size_bytes: 1120
-model_uuid: m-bcc261dbf9034f07a40f760854560efb
+model_uuid: m-2ec4d526e30a41d292a9488e16b0f1ea
 prompts: null
-run_id: 44050a3f5af1456396f807d3aeccc320
-utc_time_created: '2025-12-23 17:49:45.324051'
+run_id: e3f8c85401ef463dab558b4c78621f82
+utc_time_created: '2025-12-24 00:42:32.671814'
