@@ -5,11 +5,10 @@ dependencies:
   - python=3.10
   - pip
   - pip:
-      - mlflow==2.12.1
-      - cloudpickle==3.0.0
-      - numpy==1.26.4
-      - pandas==2.1.4
-      - pyarrow==14.0.2
-      - scikit-learn==1.4.2
-      - scipy==1.11.4
-
+      - mlflow==3.8.0
+      - cloudpickle
+      - numpy
+      - pandas
+      - pyarrow
+      - scikit-learn
+      - scipy

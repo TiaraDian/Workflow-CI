@@ -1,60 +1,38 @@
-name: MLflow CI Training + Docker
+name: MLflow CI Training
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
-  mlflow-ci:
+  train-model:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-activate-base: false
+          environment-file: MLProject/conda.yaml
+          activate-environment: mlflow-env
 
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
+      - name: Install MLflow
+        shell: bash -l {0}
+        run: |
+          pip install mlflow
 
-    - name: Check Env
-      run: |
-        python --version
-        pip --version
+      - name: Run MLflow Project
+        shell: bash -l {0}
+        run: |
+          cd MLProject
+          mlflow run .
 
-    - name: Install dependencies
-      run: |
-        pip install mlflow pandas numpy scikit-learn scipy
-
-    - name: Reset MLflow env
-      run: |
-        unset MLFLOW_RUN_ID
-        unset MLFLOW_EXPERIMENT_ID
-
-    - name: Run MLflow Project
-      run: |
-        mlflow run MLProject --env-manager=local
-
-    - name: Get latest MLflow run_id
-      run: |
-        RUN_ID=$(sqlite3 MLProject/mlflow.db \
-          "select run_uuid from runs order by start_time desc limit 1;")
-        echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-        echo "Latest run_id: $RUN_ID"
-
-    - name: Build Docker Model
-      run: |
-        mlflow models build-docker \
-          --model-uri runs:/$RUN_ID/model \
-          --name tiaradian/mlflow-heart-disease
-
-    - name: Log in to Docker Hub
-      run: |
-        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
-        -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    - name: Push Docker Image
-      run: |
-        docker push tiaradian/mlflow-heart-disease
+      - name: Upload MLflow Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlflow-artifacts
+          path: MLProject/mlruns
